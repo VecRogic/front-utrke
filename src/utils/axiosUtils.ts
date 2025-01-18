@@ -40,18 +40,7 @@ function setupInterceptors() {
   // Request interceptor
   axiosInstance.interceptors.request.use(
     async (config) => {
-      const token = store.getState().account.token;
-      const excludedUrls = [
-        "http://localhost:8080/user/register",
-        "http://localhost:8080/user/login",
-      ];
-
-      // Check if the URL is in the excluded list
-      if (!excludedUrls.includes(config.url || "")) {
-        if (token?.accessToken) {
-          config.headers.Authorization = `Bearer ${token.accessToken}`
-        }
-      }
+    
 
       return config;
     },

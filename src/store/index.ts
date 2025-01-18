@@ -1,18 +1,12 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import { all, AllEffect, fork, ForkEffect } from 'redux-saga/effects';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import accountReducer from './account/reducer';
-import accountSaga from './account/saga';
 import store from './configureStore';
-import searchFlightReducer from './searchFlight/reducer';
-import searchFlightSaga from './searchFlight/saga';
-import payPalReducer from './payPal/reducer';
-import payPalSaga from './payPal/saga';
-
+import searchRaceSaga from './searchRace/saga';
+import searchRaceReducer from './searchRace/reducer';
 export const rootReducer = combineReducers({
-  account: accountReducer,
-  searchFlight : searchFlightReducer,
-  payPal : payPalReducer
+  searchRace:searchRaceReducer
+
 });
 
 export function* rootSaga(): Generator<
@@ -20,7 +14,7 @@ export function* rootSaga(): Generator<
   void,
   unknown
 > {
-  yield all([fork(accountSaga),fork(searchFlightSaga),fork(payPalSaga)]);
+  yield all([fork(searchRaceSaga)]);
 }
 
 // Type definitions for use in the app
