@@ -14,4 +14,11 @@ export default class SearchRaceService{
     static getRaceResults(raceResultsForm: RaceResultsRequest){
         return getAxiosInstance().get(`http://localhost:8080/race-results/get-by-season-and-round?seasonYear=${raceResultsForm.seasonYear}&round=${raceResultsForm.round}`);
     }
+
+    static getDriverDetails(driverId:string){
+         return getAxiosInstance().get(`http://localhost:8080/get-driver-details/${driverId}`);
+    }
+    static getConstructorDetails(constructorId:string){
+        return getAxiosInstance().get(`http://localhost:8080/get-constructor-details/${constructorId}`);
+   }
 }

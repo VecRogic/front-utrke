@@ -12,16 +12,15 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getRaceResultsRequest } from "../../store/searchRace/reducer";
 import { RaceResultsRequest } from "../../models/SearchRace";
+import { useNavigate } from "react-router-dom";
 
 const RaceResults = () =>{
    const dispatch = useDispatch();
+   const navigate = useNavigate();
     const selectedRace = useAppSelector((state) => state.searchRace.selectedRace) ?? undefined;
     const raceResults = useAppSelector((state) => state.searchRace.raceResults) ?? [];
     const selectedSeason = useAppSelector((state)=> state.searchRace.selectedSeason) ?? undefined;
     useEffect(() =>{
-      if(selectedRace){
-        
-      }
       const form:RaceResultsRequest = {
         seasonYear:selectedSeason ?? "2025",
         round:selectedRace ?? "1"
@@ -35,11 +34,12 @@ const RaceResults = () =>{
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Number</TableCell>
-            <TableCell align="right">Driver&nbsp;(g)</TableCell>
-            <TableCell align="right">Constructor&nbsp;(g)</TableCell>
-            <TableCell align="right">Average speed&nbsp;(g)</TableCell>
+            <TableCell align="center">Number</TableCell>
+            <TableCell align="right">Position</TableCell>
+            <TableCell align="right">Driver</TableCell>
+            <TableCell align="right">Constructor</TableCell>
+            <TableCell align="right">Points</TableCell>
+            <TableCell align="right">Average speed</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -52,8 +52,9 @@ const RaceResults = () =>{
                 {row.number}
               </TableCell>
               <TableCell align="right">{row.number}</TableCell>
-              <TableCell align="right">{row.driver.driverFirstAndLastName}</TableCell>
-              <TableCell align="right">{row.constructor.name}</TableCell>
+              <TableCell align="right" onClick={ () => navigate(`/driver/${row.driver.driverId}`)}>{row.driver.driverFirstAndLastName}</TableCell>
+              <TableCell align="right" onClick={ () => navigate(`/constuctor/${row.constructor.constructorId}`)}>{row.constructor.name}</TableCell>
+              <TableCell align="right">{row.points}</TableCell>
               <TableCell align="right">{row.averageSpeed?.speed}</TableCell>
             </TableRow>
           ))}
@@ -61,6 +62,7 @@ const RaceResults = () =>{
       </Table>
     </TableContainer>
         </Row>
+        <img alt="" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/2024-08-25_Motorsport%2C_Formel_1%2C_Gro%C3%9Fer_Preis_der_Niederlande_2024_STP_3973_by_Stepro_%28medium_crop%29.jpg/320px-2024-08-25_Motorsport%2C_Formel_1%2C_Gro%C3%9Fer_Preis_der_Niederlande_2024_STP_3973_by_Stepro_%28medium_crop%29.jpg" className="MuiAvatar-img mui-1hy9t21"></img>
     </>
     );
 }

@@ -1,49 +1,90 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { setSelectedRace, getRacesBySeasonRequest } from "../../store/searchRace/reducer";
+import { setSelectedRace as setSelectedRaceAction, getRacesBySeasonRequest } from "../../store/searchRace/reducer";
 import { useAppSelector } from "../../store";
-import { Race, Season } from "../../models/SearchRace";
+import { Race } from "../../models/SearchRace";
+import { Theme, useTheme } from "@mui/material/styles";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
+function getStyles(name: string | number, selected: string | number | null, theme: Theme) {
+  return {
+    fontWeight:
+      selected === name
+        ? theme.typography.fontWeightMedium
+        : theme.typography.fontWeightRegular,
+  };
+}
 
 const RacePicker = () => {
   const dispatch = useDispatch();
+  const theme = useTheme();
   const races = useAppSelector((state) => state.searchRace.races) ?? []; // Fallback to an empty array
-  const seletedYear = useAppSelector((state)=> state.searchRace.selectedSeason) ?? undefined;    
-  // Fetch seasons if not already fetched
+  const selectedYear = useAppSelector((state) => state.searchRace.selectedSeason) ?? undefined;
+
+  // Fetch races if a year is selected
   useEffect(() => {
-    if (seletedYear) {
-      dispatch(getRacesBySeasonRequest(seletedYear));
+    if (selectedYear) {
+      dispatch(getRacesBySeasonRequest(selectedYear));
     }
-    console.log("Races Loaded:", races); // Debugging loaded seasons
-  }, [seletedYear]);
+    console.log("Races Loaded:", races); // Debugging loaded races
+  }, [selectedYear]);
 
-  const [selectedRaces, setSelectedRaces] = useState<string | number | null>(null);
+  const [localSelectedRace, setLocalSelectedRace] = useState<string | number | null>(null);
 
-  const handleRaceSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-
-    setSelectedRaces(e.target.value);
-    dispatch(setSelectedRace(e.target.value));
-    alert(`You selected race: ${e.target.value}`);
+  const handleRaceSelect = (event: SelectChangeEvent<string | number>) => {
+    const selected = event.target.value as string | number;
+    setLocalSelectedRace(selected);
   };
+
+  useEffect(() => {
+    if (localSelectedRace) {
+      dispatch(setSelectedRaceAction(localSelectedRace)); // Dispatch the Redux action
+    }
+  }, [localSelectedRace, dispatch]);
 
   return (
     <div>
       <h2>Race Picker</h2>
-      <select onChange={handleRaceSelect} value={selectedRaces || ""}>
-  <option value="" disabled>
-    Select a Race
-  </option>
-  {/* Ensure races is an array */}
-  {Array.isArray(races) && races.length > 0 ? (
-    races.map((races: Race) => (
-      <option key={races.round} value={races.round}>
-        {races.raceName}
-      </option>
-    ))
-  ) : (
-    <option disabled>No races available</option>
-  )}
-</select>
-      {selectedRaces && <p>Selected Race: {selectedRaces}</p>}
+      <FormControl sx={{ m: 1, width: 300 }}>
+        <InputLabel id="race-picker-label">Race</InputLabel>
+        <Select
+          labelId="race-picker-label"
+          id="race-picker"
+          value={localSelectedRace || ""}
+          onChange={handleRaceSelect}
+          input={<OutlinedInput label="Race" />}
+          MenuProps={MenuProps}
+        >
+          {Array.isArray(races) && races.length > 0 ? (
+            races.map((race: Race) => (
+              <MenuItem
+                key={race.round}
+                value={race.round}
+                style={getStyles(race.round, localSelectedRace, theme)}
+              >
+                {race.raceName}
+              </MenuItem>
+            ))
+          ) : (
+            <MenuItem disabled>No races available</MenuItem>
+          )}
+        </Select>
+      </FormControl>
     </div>
   );
 };

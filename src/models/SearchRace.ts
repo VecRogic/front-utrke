@@ -40,3 +40,27 @@ export interface RaceResultsRequest{
   seasonYear:string,
   round:string
 }
+
+export interface DriverDetail{
+  driver:DriverData,
+  raceList:RaceDetails[]
+}
+export interface DriverData{
+  code:string,
+  dateOfBirth:string,//yyyy-MM-dd
+  nationality:string,
+  url:string,//wikipedia url
+}
+export interface RaceDetails{
+  raceName:string,
+  season:string,
+  round:string,
+  date:string,//yyyy-MM-dd
+  location:string,//City,Country
+  circuit:string,//url for wikipedia
+}
+
+export interface ConstructorDetails{
+  nationality:string,
+  drivers:DriverData[]
+}

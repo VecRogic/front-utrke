@@ -3,9 +3,36 @@ import { useDispatch } from "react-redux";
 import { getListOfYearRequest, setSelectedSeason } from "../../store/searchRace/reducer";
 import { useAppSelector } from "../../store";
 import { Season } from "../../models/SearchRace";
+import { Theme, useTheme } from "@mui/material/styles";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
+function getStyles(name: string, selected: string | number | null, theme: Theme) {
+  return {
+    fontWeight:
+      selected === name
+        ? theme.typography.fontWeightMedium
+        : theme.typography.fontWeightRegular,
+  };
+}
 
 const SeasonPicker = () => {
   const dispatch = useDispatch();
+  const theme = useTheme();
   const seasons = useAppSelector((state) => state.searchRace.seasons) ?? []; // Fallback to an empty array
 
   // Fetch seasons if not already fetched
@@ -18,32 +45,40 @@ const SeasonPicker = () => {
 
   const [selectedSeasonYear, setSelectedSeasonYear] = useState<string | number | null>(null);
 
-  const handleSeasonSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedSeason = e.target.value;
+  const handleSeasonSelect = (event: SelectChangeEvent<string | number>) =>{
+    const selectedSeason = event.target.value as string | number;
     dispatch(setSelectedSeason(selectedSeason));
     setSelectedSeasonYear(selectedSeason);
-    alert(`You selected season: ${e.target.value}`);
   };
- 
+
   return (
     <div>
       <h2>Season Picker</h2>
-      <select onChange={handleSeasonSelect} value={selectedSeasonYear || ""}>
-  <option value="" disabled>
-    Select a Season
-  </option>
-  {/* Ensure seasons is an array */}
-  {Array.isArray(seasons) && seasons.length > 0 ? (
-    seasons.map((season: Season) => (
-      <option key={season.seasonYear} value={season.seasonYear}>
-        {season.seasonYear}
-      </option>
-    ))
-  ) : (
-    <option disabled>No seasons available</option>
-  )}
-</select>
-      {selectedSeasonYear && <p>Selected Season: {selectedSeasonYear}</p>}
+      <FormControl sx={{ m: 1, width: 300 }}>
+        <InputLabel id="season-picker-label">Season</InputLabel>
+        <Select
+          labelId="season-picker-label"
+          id="season-picker"
+          value={selectedSeasonYear || ""}
+          onChange={handleSeasonSelect}
+          input={<OutlinedInput label="Season" />}
+          MenuProps={MenuProps}
+        >
+          {Array.isArray(seasons) && seasons.length > 0 ? (
+            seasons.map((season: Season) => (
+              <MenuItem
+                key={season.seasonYear}
+                value={season.seasonYear}
+                style={getStyles(season.seasonYear, selectedSeasonYear, theme)}
+              >
+                {season.seasonYear}
+              </MenuItem>
+            ))
+          ) : (
+            <MenuItem disabled>No seasons available</MenuItem>
+          )}
+        </Select>
+      </FormControl>
     </div>
   );
 };
