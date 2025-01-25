@@ -2,7 +2,7 @@ import createSagaMiddleware from 'redux-saga';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { configureStore } from '@reduxjs/toolkit';
-import { rootReducer, rootSaga } from '.'; // Refactored to import from 'root'
+import { rootReducer, rootSaga } from '.'; 
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -11,7 +11,7 @@ const persistConfig = {
   key: 'root',
   version: 1,
   storage,
-  blacklist: [], // Keep as is or modify if needed
+  blacklist: [],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

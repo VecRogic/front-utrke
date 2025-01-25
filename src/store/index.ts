@@ -17,10 +17,10 @@ export function* rootSaga(): Generator<
   yield all([fork(searchRaceSaga)]);
 }
 
-// Type definitions for use in the app
- type RootState = ReturnType<typeof rootReducer>;
- type AppDispatch = typeof store.dispatch; // Updated usage
 
-// Custom hooks for using Redux state and dispatch with TypeScript
+ type RootState = ReturnType<typeof rootReducer>;
+ type AppDispatch = typeof store.dispatch; 
+
+
 export const useAppDispatch = (): AppDispatch => useDispatch<AppDispatch>();
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;

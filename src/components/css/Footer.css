@@ -1,10 +1,11 @@
 .footer {
-    width: 100%; /* Make the footer the same width as the header */
-    text-align: center; /* Center the text horizontally */
-    padding: 20px 0; /* Add some padding for spacing */
-    background-color: #f1f1f1; /* Background color for the footer */
-    font-size: 16px; /* Font size for the text */
-    position: fixed; /* Fix the footer at the bottom of the page */
+    width: 100%; 
+    text-align: center; 
+    padding: 20px 0; 
+    background-color: #f1f1f1; 
+    font-size: 16px; 
+    position: relative; 
     bottom: 0;
     left: 0;
 }
+

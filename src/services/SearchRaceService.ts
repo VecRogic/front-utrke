@@ -16,7 +16,7 @@ export default class SearchRaceService{
     }
 
     static getDriverDetails(driverId:string){
-         return getAxiosInstance().get(`http://localhost:8080/get-driver-details/${driverId}`);
+         return getAxiosInstance().get(`http://localhost:8080/races/get-by-driver-id?driverId=${driverId}`);
     }
     static getConstructorDetails(constructorId:string){
         return getAxiosInstance().get(`http://localhost:8080/get-constructor-details/${constructorId}`);

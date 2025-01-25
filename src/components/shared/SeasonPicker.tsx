@@ -33,14 +33,13 @@ function getStyles(name: string, selected: string | number | null, theme: Theme)
 const SeasonPicker = () => {
   const dispatch = useDispatch();
   const theme = useTheme();
-  const seasons = useAppSelector((state) => state.searchRace.seasons) ?? []; // Fallback to an empty array
+  const seasons = useAppSelector((state) => state.searchRace.seasons) ?? []; 
 
-  // Fetch seasons if not already fetched
+
   useEffect(() => {
     if (seasons.length === 0) {
       dispatch(getListOfYearRequest());
     }
-    console.log("Seasons Loaded:", seasons); // Debugging loaded seasons
   }, [dispatch, seasons]);
 
   const [selectedSeasonYear, setSelectedSeasonYear] = useState<string | number | null>(null);

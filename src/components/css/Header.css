@@ -1,10 +1,10 @@
-/* Header.css */
+
 .header-navbar {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 10px 20px;
-  display: flex; /* Use flexbox to align items */
-  justify-content: space-between; /* Space out the brand and nav items */
-  align-items: center; /* Vertically center items */
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
 }
 
 .header-navbar .nav-link {

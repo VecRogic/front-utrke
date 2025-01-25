@@ -33,15 +33,14 @@ function getStyles(name: string | number, selected: string | number | null, them
 const RacePicker = () => {
   const dispatch = useDispatch();
   const theme = useTheme();
-  const races = useAppSelector((state) => state.searchRace.races) ?? []; // Fallback to an empty array
+  const races = useAppSelector((state) => state.searchRace.races) ?? []; 
   const selectedYear = useAppSelector((state) => state.searchRace.selectedSeason) ?? undefined;
 
-  // Fetch races if a year is selected
+
   useEffect(() => {
     if (selectedYear) {
       dispatch(getRacesBySeasonRequest(selectedYear));
     }
-    console.log("Races Loaded:", races); // Debugging loaded races
   }, [selectedYear]);
 
   const [localSelectedRace, setLocalSelectedRace] = useState<string | number | null>(null);
@@ -53,7 +52,7 @@ const RacePicker = () => {
 
   useEffect(() => {
     if (localSelectedRace) {
-      dispatch(setSelectedRaceAction(localSelectedRace)); // Dispatch the Redux action
+      dispatch(setSelectedRaceAction(localSelectedRace)); 
     }
   }, [localSelectedRace, dispatch]);
 

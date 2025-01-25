@@ -13,6 +13,8 @@ import { useDispatch } from "react-redux";
 import { getRaceResultsRequest } from "../../store/searchRace/reducer";
 import { RaceResultsRequest } from "../../models/SearchRace";
 import { useNavigate } from "react-router-dom";
+import FullScreenLoader from "./FullScreenLoader";
+import { stat } from "fs";
 
 const RaceResults = () =>{
    const dispatch = useDispatch();
@@ -20,6 +22,7 @@ const RaceResults = () =>{
     const selectedRace = useAppSelector((state) => state.searchRace.selectedRace) ?? undefined;
     const raceResults = useAppSelector((state) => state.searchRace.raceResults) ?? [];
     const selectedSeason = useAppSelector((state)=> state.searchRace.selectedSeason) ?? undefined;
+    const loading = useAppSelector((state)=> state.searchRace.loading);
     useEffect(() =>{
       const form:RaceResultsRequest = {
         seasonYear:selectedSeason ?? "2025",
@@ -29,6 +32,7 @@ const RaceResults = () =>{
     },[selectedRace])
     return (
     <>
+      {loading ?? <FullScreenLoader/>}
         <Row>
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -52,7 +56,7 @@ const RaceResults = () =>{
                 {row.number}
               </TableCell>
               <TableCell align="right">{row.number}</TableCell>
-              <TableCell align="right" onClick={ () => navigate(`/driver/${row.driver.driverId}`)}>{row.driver.driverFirstAndLastName}</TableCell>
+              <TableCell align="right" onClick={ () => navigate(`/driver/${row.driver.driverId}`)}>{row.driver.firstAndLastName}</TableCell>
               <TableCell align="right" onClick={ () => navigate(`/constuctor/${row.constructor.constructorId}`)}>{row.constructor.name}</TableCell>
               <TableCell align="right">{row.points}</TableCell>
               <TableCell align="right">{row.averageSpeed?.speed}</TableCell>

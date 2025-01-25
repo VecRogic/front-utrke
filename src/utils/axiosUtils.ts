@@ -1,47 +1,37 @@
 import axios, { AxiosInstance } from "axios";
 
+let store: any;
 
-let store: any; // Placeholder for the Redux store
-
-// Function to inject the Redux store
 export const injectStore = (_store: any) => {
   store = _store;
 };
-const { CancelToken } = axios;
 
+const { CancelToken } = axios;
 const timeout = 60 * 1000;
 
 let axiosInstance: AxiosInstance;
 
-// Function to get or create a new Axios instance
 export function getAxiosInstance(): AxiosInstance {
   if (axiosInstance === null || axiosInstance === undefined) {
     axiosInstance = getNewAxiosInstance();
   }
   //@ts-ignore
-     axiosInstance.cancelToken = new CancelToken((cancel) =>
-       setTimeout(() => cancel("Error"), timeout)
-     );
+  axiosInstance.cancelToken = new CancelToken((cancel) =>
+    setTimeout(() => cancel("Error"), timeout)
+  );
   return axiosInstance;
 }
 
-// Function to create and configure a new Axios instance
 function getNewAxiosInstance() {
   axiosInstance = axios.create({
     timeout,
   });
-
-  // Set up interceptors
   return setupInterceptors();
 }
 
-// Function to set up interceptors on the Axios instance
 function setupInterceptors() {
-  // Request interceptor
   axiosInstance.interceptors.request.use(
     async (config) => {
-    
-
       return config;
     },
     (error) => {
@@ -49,7 +39,6 @@ function setupInterceptors() {
     }
   );
 
-  // Response interceptor
   axiosInstance.interceptors.response.use(
     (response) => response,
     async (error) => {

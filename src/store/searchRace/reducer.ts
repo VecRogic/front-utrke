@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
     ConstructorDetails,
-  DriverDetail,
+  DriverData,
   Race,
   RaceResult,
   Season,
@@ -16,7 +16,7 @@ export interface RaceSearchState {
   selectedSeason?: string;
   selectedRace?: string;
   raceResults?: RaceResult[];
-  driverDetails?: DriverDetail;
+  driverDetails?: DriverData;
   constructorDetails?:ConstructorDetails;
 }
 

@@ -46,8 +46,6 @@ const drivers = [
     nationality: "Australian",
   },
 ];
-
-// ConstructorDetails Component
 const ConstructorDetails = () => {
   const dispatch = useAppDispatch();
   const { id } = useParams();
@@ -60,7 +58,6 @@ const ConstructorDetails = () => {
     <>
       {!driverDetails ? (
         <Box sx={{ p: 4 }}>
-          {/* Constructor Details Card */}
           <Card sx={{ mb: 4, boxShadow: 3 }}>
             <CardContent>
               <Typography variant="h5" component="div" gutterBottom>

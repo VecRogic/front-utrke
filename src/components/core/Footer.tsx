@@ -1,11 +1,11 @@
 import React from 'react';
 
-import '../css/Footer.css'; // Assuming you want to keep styles in a separate CSS file
+import '../css/Footer.css';
 
 const Footer = () => {
     return (
         <div className="footer">
-            @Colja Coljanović
+            @Dominik Šparavec
         </div>
     );
 }
