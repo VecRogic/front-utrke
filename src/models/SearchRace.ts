@@ -15,6 +15,8 @@ export interface Driver {
 export interface Constructor {
   constructorId: string;
   name: string;
+  url:string,
+  nationality:string
 }
 
 export interface Time {
@@ -74,6 +76,6 @@ export interface Location{
   country:string
 }
 export interface ConstructorDetails {
-  nationality: string;
-  drivers: DriverData[];
+  constructor:Constructor,
+  drivers: DriverDetails[];
 }

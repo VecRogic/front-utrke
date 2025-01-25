@@ -142,6 +142,7 @@ const searchRaceSlice = createSlice({
       state.loading = false;
       state.error = undefined;
       state.constructorDetails = action.payload;
+      console.log(state.constructorDetails)
     },
     getConstructorDetailsFailure: (
       state: RaceSearchState,
