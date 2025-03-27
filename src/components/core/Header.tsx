@@ -1,16 +1,14 @@
-import React from "react";
-import { Navbar, Nav, Button, Container } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
 import "../css/Header.css";
+import { Navbar, Container } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const Header = () => {
-  const navigate = useNavigate();
-
   return (
     <Navbar bg="white" expand="lg" className="header-navbar">
       <Container>
         <Navbar.Brand as={Link} to="/" className="navbar-brand">
-          F1
+          F1 
         </Navbar.Brand>
       </Container>
     </Navbar>

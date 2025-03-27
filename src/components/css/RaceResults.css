@@ -1,0 +1,8 @@
+.clickable{
+    text-decoration: underline;
+}
+
+.clickable:hover {
+    background-color: rgb(226, 222, 222);
+   
+  }
